@@ -8,7 +8,10 @@ const app = express();
 
 // Middleware
 app.use(express.json());
-app.use(cors());
+app.use(cors({
+  origin: ["https://styleswap-frontend.vercel.app"],
+  credentials: true,
+}));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static("public"));
 app.use(
