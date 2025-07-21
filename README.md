@@ -1,0 +1,1 @@
+StyleSwap is a full-stack clothing rental and exchange platform built with React, Express, and MongoDB, enabling users to rent, wishlist, and securely swap clothes with others. Admin dashboard and payment integration included.
