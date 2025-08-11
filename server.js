@@ -6,35 +6,20 @@ require("dotenv").config();
 
 const app = express();
 const port = process.env.PORT || 1226;
-
-// ===== Middleware =====
+// Middleware
 app.use(express.json());
+app.use(cors());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static("public"));
+app.use(session({ secret: 'thisIsMySuperSecretKey123', resave: false, saveUninitialized: true }));
+//async function main() {
+/*  await mongoose.connect(
+    process.env.MONGODB_URI ||
+      "mongodb+srv://abraralvee:ars242423@styleswap.ezzcs5q.mongodb.net/styleswap?retryWrites=true&w=majority&appName=StyleSwap"
+  );*/
 
-// Configure CORS
-const allowedOrigin = process.env.CLIENT_URL || "http://localhost:5173";
-app.use(
-  cors({
-    origin: allowedOrigin,
-    credentials: true,
-  })
-);
 
-// Secure session
-const MongoStore = require("connect-mongo");
 
-app.use(session({
-  secret: process.env.JWT_SECRET || 'fallbackSecret',
-  resave: false,
-  saveUninitialized: false,
-  store: MongoStore.create({
-    mongoUrl: process.env.MONGODB_URI,
-    ttl: 14 * 24 * 60 * 60 // 14 days
-  })
-}));
-
-// ===== Main function =====
 async function main() {
   try {
     if (!process.env.MONGODB_URI) {
@@ -42,7 +27,7 @@ async function main() {
     }
 
     await mongoose.connect(process.env.MONGODB_URI);
-    console.log("✅ MongoDB Connected Successfully!");
+    console.log(" MongoDB Connected Successfully!");
 
     // ===== Basic test routes =====
     app.get("/", (req, res) => {
@@ -76,10 +61,10 @@ async function main() {
 
     // ===== Start server =====
     app.listen(port, () => {
-      console.log(`🚀 Server listening on port ${port}`);
+      console.log(` Server listening on port ${port}`);
     });
   } catch (err) {
-    console.error("❌ Server startup error:", err.message);
+    console.error(" Server startup error:", err.message);
     process.exit(1); // Stop the process if DB connection fails
   }
 }
