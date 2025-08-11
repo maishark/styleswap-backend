@@ -22,13 +22,17 @@ app.use(
 );
 
 // Secure session
-app.use(
-  session({
-    secret: process.env.SESSION_SECRET || "fallbackSecretKey",
-    resave: false,
-    saveUninitialized: true,
+const MongoStore = require("connect-mongo");
+
+app.use(session({
+  secret: process.env.JWT_SECRET || 'fallbackSecret',
+  resave: false,
+  saveUninitialized: false,
+  store: MongoStore.create({
+    mongoUrl: process.env.MONGODB_URI,
+    ttl: 14 * 24 * 60 * 60 // 14 days
   })
-);
+}));
 
 // ===== Main function =====
 async function main() {
