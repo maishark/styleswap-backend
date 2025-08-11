@@ -18,7 +18,7 @@ const sendPaymentConfirmationEmail = async (user, order, paymentDetails) => {
     html: `
       <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
         <h1 style="color: #4F46E5; text-align: center;">Payment Confirmation</h1>
-        <p>Dear ${user.name},</p>
+        <p>Dear ${user?.name || 'Customer'},</p>
         <p>Your payment has been successfully processed.</p>
         
         <div style="background-color: #F3F4F6; padding: 20px; border-radius: 8px; margin: 20px 0;">
